@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
-file_path = 'https://raw.githubusercontent.com/oliver3212/salary-simulation/main/DataScience_salaries_US.csv'
+file_path = 'DataScience_salaries_US.csv'
 data = pd.read_csv(file_path)
 
 job_title_counts = data['job_title'].value_counts()
