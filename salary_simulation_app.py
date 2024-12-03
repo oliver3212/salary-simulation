@@ -4,21 +4,27 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
+# Load the dataset
 file_path = 'DataScience_salaries_US.csv'
 data = pd.read_csv(file_path)
 
+# Filter job titles and experience levels with at least 100 entries
 job_title_counts = data['job_title'].value_counts()
 experience_level_counts = data['experience_level'].value_counts()
 
 available_job_titles = job_title_counts[job_title_counts >= 100].index
 available_experience_levels = experience_level_counts[experience_level_counts >= 100].index
 
-remote_ratio_mapping = {0: 'Non remote', 50: 'Hybrid', 100: 'Full remote'}
+# Map remote ratio to categories
+remote_ratio_mapping = {0: 'non remote', 50: 'hybrid', 100: 'full remote'}
 data['remote_category'] = data['remote_ratio'].map(remote_ratio_mapping)
 
-st.title("Salary Simulation")
+# Streamlit app title
+st.title("Interactive Salary Negotiation Simulation")
 
+# Sidebar for user inputs
 st.sidebar.header("User Inputs")
+st.sidebar.markdown("### Select the parameters for the simulation:")
 job_title = st.sidebar.selectbox("Select Job Title", available_job_titles)
 experience_level = st.sidebar.selectbox("Select Experience Level", available_experience_levels)
 remote_category = st.sidebar.selectbox("Select Remote Category", ['non remote', 'hybrid', 'full remote'])
@@ -53,9 +59,9 @@ if st.sidebar.button("Run Simulation"):
             
             # Display results
             st.subheader(f"Results for {job_title} ({experience_level}):")
-            st.write(f"Mean Salary: ${mean_salary:,.2f}")
-            st.write(f"Median Salary: ${median_salary:,.2f}")
-            st.write(f"95% Confidence Interval: ${salary_95ci[0]:,.2f} - ${salary_95ci[1]:,.2f}")
+            st.write(f"**Mean Salary:** ${mean_salary:,.2f}")
+            st.write(f"**Median Salary:** ${median_salary:,.2f}")
+            st.write(f"**95% Confidence Interval:** ${salary_95ci[0]:,.2f} - ${salary_95ci[1]:,.2f}")
 
             # Plot the histogram
             st.subheader("Simulation Histogram")
